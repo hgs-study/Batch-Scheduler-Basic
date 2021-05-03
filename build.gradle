@@ -19,7 +19,10 @@ repositories {
 }
 
 dependencies {
+    compile 'mysql:mysql-connector-java'
+    compile 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.h2database:h2:1.4.199'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
