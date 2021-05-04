@@ -52,6 +52,17 @@
 ```
 
 
+![image](https://user-images.githubusercontent.com/76584547/117035271-144bf800-ad3f-11eb-92b6-982a78734aac.png)
+  
+
+### Next
+----
+  + Job 내부의 Step들간에 순서 혹은 처리 흐름을 제어
+  + 순차적으로 Step들 연결시킬때 사용
+
+
+
+
 출처 : https://ahndy84.tistory.com/18
 
 참고 : https://jojoldu.tistory.com/325?category=902551
