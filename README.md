@@ -65,6 +65,23 @@
   + 환경 변수 job.name과 일치하는 job만 실행시킨다. 
   + ${job.name:NONE} job.name : 우측으로 NONE이 있는데 job.name과 일치하지 않는 배치는 실행하지 않는다는 것이다.
 
+![image](https://user-images.githubusercontent.com/76584547/117096104-0a5be080-ada3-11eb-8b29-139c1682d7bc.png)
+  + step1 실패 시나리오: step1 -> step3
+  + step1 성공 시나리오: step1 -> step2 -> step3
+  + .on()
+    + 캐치할 ExitStatus 지정
+    + "*" 일 경우 모든 ExitStatus가 지정된다. ※중요!!!! on이 캐치하는 상태값이 BatchStatus가 아닌 ExitStatus라는 점
+  + .to()
+    + 다음응로 이동할 Step 지정
+  + .from()
+    + 일종의 이벤트 리스터 역할
+    + 상태 값을 보고 일치하는 상태라면 to()에 포함된 step을 호출
+    + step1의 이벤트 캐치가 FAILED로 되어있는 상태에서 추가로 이벤트 캐치하려면 from을 써야만 한다.  
+  + end()
+    + end는 FlowBuilder를 반환하는 end와 FlowBuilder를 종료하는 end 2개가 있음
+    + on("*") 뒤에 있는 end는 FlowBuilder를 반환하는 end
+    + build() 앞에 있는 end는 FlowBuilder를 종료하는 end
+    + FlowBuilder를 반환하는 end 사용시 계속해서 from을 이어갈 수 있음 
 
 출처 : https://ahndy84.tistory.com/18
 
