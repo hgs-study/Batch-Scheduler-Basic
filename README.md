@@ -52,15 +52,18 @@
 ```
 
 
-![image](https://user-images.githubusercontent.com/76584547/117035271-144bf800-ad3f-11eb-92b6-982a78734aac.png)
-  
-
 ### Next
 ----
+![image](https://user-images.githubusercontent.com/76584547/117094725-7f2d1b80-ad9f-11eb-893f-ef9e2af4b96c.png)
   + Job 내부의 Step들간에 순서 혹은 처리 흐름을 제어
   + 순차적으로 Step들 연결시킬때 사용
 
 
+### 특정 배치만 실행
+----
+![image](https://user-images.githubusercontent.com/76584547/117094765-a08e0780-ad9f-11eb-9ad7-56a18ea1c396.png)
+  + 환경 변수 job.name과 일치하는 job만 실행시킨다. 
+  + ${job.name:NONE} job.name : 우측으로 NONE이 있는데 job.name과 일치하지 않는 배치는 실행하지 않는다는 것이다.
 
 
 출처 : https://ahndy84.tistory.com/18
