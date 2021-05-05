@@ -95,6 +95,55 @@
       + ExitStatus를 커스텀하게 고치기 위해선 Listener를 생성하고 Job Flow에 등록하는 등 번거로움이 존재합니다.
     + Decide는 Spring Batch에서는 Step들의 Flow속에서 분기만 담당하는 타입이 있습니다.
 
+### ItemStream 인터페이스
+----
+  + ItemReader의 주기적으로 상태를 저장하고 오류가 발생하면 해당 상태에서 복원하기 위한 마커 인터페이스입니다.
+  + 즉, 배치 프로세스의 실행 컨텍스트와 연계해서 ItemReader의 상태를 저장하고 실패한 곳에서 다시 실행할 수 있게 해주는 역할을 합니다.
+
+
+### CursorItemReader
+----
+  + Cursor 방식은 Database와 커넥션을 맺은 후, Cursor를 한칸씩 옮기면서 지속적으로 데이터를 빨아옵니다.
+  + CursorItemReader는 Paging과 다르게 Streaming 으로 데이터를 처리합니다.
+  + 쉽게 생각하시면 Database와 어플리케이션 사이에 통로를 하나 연결하고 하나씩 빨아들인다고 생각하시면 됩니다.
+  + Jpa에는 CursorItemReader가 없습니다.
+
+
+### PagingItemReader
+----
+  + Database Cursor를 사용하는 대신 여러 쿼리를 실행하여 각 쿼리가 결과의 일부를 가져 오는 방법도 있습니다.
+  + 각 페이지마다 새로운 쿼리를 실행하므로 페이징시 결과를 정렬하는 것이 중요합니다.
+  + 데이터 결과의 순서가 보장될 수 있도록 order by가 권장됩니다.
+  + CursorItemReader와 설정이 크게 다른것은 바로 쿼리 (createQueryProvider())입니다.
+  + 각 Database에는 Paging을 지원하는 자체적인 전략들이 있습니다.
+    + 로컬에서 h2를 사용하다가 운영서버는 Mysql을 사용할 경우 
+
+
+### JpaPagingItemReader
+----
+![image](https://user-images.githubusercontent.com/76584547/117148572-4f0e6880-adf1-11eb-9e24-c8a4adba241c.png)
+![image](https://user-images.githubusercontent.com/76584547/117148652-651c2900-adf1-11eb-966b-cb4adca9378a.png)
+
+  + Spring Batch 역시 JPA를 지원하기 위해 JpaPagingItemReader를 공식적으로 지원하고 있습니다.
+    + 현재 Querydsl, Jooq 등을 통한 ItemReader 구현체는 공식 지원하지 않습니다.
+    + CustomItemReader 구현체를 만드셔야만 합니다.
+    + JPA는 Hibernate와 많은 유사점을 가지고 있습니다만, 한가지 다른 것이 있다면 Hibernate 에선 Cursor가 지원되지만 JPA에는 Cursor 기반 Database 접근을 지원하지 않습니다.
+    + EntityManagerFactory를 지정하는 것 외에 JdbcPagingItemReader와 크게 다른 점은 없습니다.
+
+### PagingItemReader 주의 사항
+----
+  + 정렬 (Order) 가 무조건 포함되어 있어야 합니다.
+
+### ItemReader 주의 사항
+-----
+  + JpaRepository를 ListItemReader, QueueItemReader에 사용하면 안됩니다.
+    + 간혹 JPA의 조회 쿼리를 쉽게 구현하기 위해 JpaRepository를 이용해서 new ListItemReader<>(jpaRepository.findByAge(age)) 로 Reader를 구현하는 분들을 종종 봅니다.
+    + 이렇게 할 경우 Spring Batch의 장점인 페이징 & Cursor 구현이 없어 대규모 데이터 처리가 불가능합니다. (물론 Chunk 단위 트랜잭션은 됩니다.)
+    + 만약 정말 JpaRepository를 써야 하신다면 RepositoryItemReader를 사용하시는 것을 추천합니다.
+      + Paging을 기본적으로 지원합니다.
+      + 예제 코드 : https://stackoverflow.com/questions/43003266/spring-batch-with-spring-data/43986718#43986718
+    + Hibernate, JPA 등 영속성 컨텍스트가 필요한 Reader 사용시 fetchSize와 ChunkSize는 같은 값을 유지해야 합니다.
+
 출처 : https://ahndy84.tistory.com/18
 
 참고 : https://jojoldu.tistory.com/325?category=902551
