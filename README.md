@@ -83,6 +83,18 @@
     + build() 앞에 있는 end는 FlowBuilder를 종료하는 end
     + FlowBuilder를 반환하는 end 사용시 계속해서 from을 이어갈 수 있음 
 
+### Decide
+----
+![image](https://user-images.githubusercontent.com/76584547/117108311-f1acf400-adbd-11eb-8123-1adb9a8e58e9.png)
+![image](https://user-images.githubusercontent.com/76584547/117108332-fa9dc580-adbd-11eb-951d-c081249ebe6d.png)
+
+  + Step의 결과에 따라 분기를 할 경우 2가지 문제가 생김
+    + Step이 담당하는 역할이 2개 이상이 됩니다.
+      + 실제 해당 Step이 처리해야할 로직외에도 분기처리를 시키기 위해 ExitStatus 조작이 필요합니다.
+    + 다양한 분기 로직 처리의 어려움
+      + ExitStatus를 커스텀하게 고치기 위해선 Listener를 생성하고 Job Flow에 등록하는 등 번거로움이 존재합니다.
+    + Decide는 Spring Batch에서는 Step들의 Flow속에서 분기만 담당하는 타입이 있습니다.
+
 출처 : https://ahndy84.tistory.com/18
 
 참고 : https://jojoldu.tistory.com/325?category=902551
