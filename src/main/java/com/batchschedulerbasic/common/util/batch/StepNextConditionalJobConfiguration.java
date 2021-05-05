@@ -44,7 +44,7 @@ public class StepNextConditionalJobConfiguration {
                                  .tasklet((contribution, chunkContext) -> {
                                      log.info(">>>> this is stepNextConditionalJob step1");
                                      //ExitStatus를 FAILED로 지정, 해당 status를 보고 flow가 진행된다.
-                                     contribution.setExitStatus(ExitStatus.FAILED);
+                                     //contribution.setExitStatus(ExitStatus.FAILED);
                                      return RepeatStatus.FINISHED;
                                  })
                                  .build();
