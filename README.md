@@ -166,6 +166,25 @@
       + 임시저장을 하고 비교하기 위해 싱글톤 객체에 값을 넣어야할때
       + 여러 Entity를 동시에 save 해야할때
 
+### ItemProcessor
+-----
+![image](https://user-images.githubusercontent.com/76584547/117323613-037bbd80-aeca-11eb-912c-1096c9fce56e.png)
+
+  + ItemProcessor는 데이터를 가공하거나 필터링하는 역할 / 필수가 아니다.
+  + ItemProcessor를 쓰는 것은 Reader, Writer 와는 별도의 단계로 분리되었기 때문에 비지니스 코드가 섞이는 것을 방지
+  + ItemProcessor<I, O> I : ItemReader에서 받을 데이터 타입 , O : ItemWriter에 보낼 데이터 타입
+    + 자바8 부터는 인터페이스의 추상 메소드가 1개일 경우 람다식을 사용할 수 있습니다. ItemProcessor 역시 process 만 있기 때문에 람다식을 사용할 수 있습니다.
+      그래서 많은 배치들이 ItemProcessor를 다음과 같이 익명 클래스 혹은 람다식을 자주 사용합니다. 
+  + ItemProcessor 구현체
+    +  ItemProcessorAdapter
+    +  ValidatingItemProcessor
+    +  CompositeItemProcessor
+      +  하지만 최근에는 대부분 Processor 구현을 직접 구현할때가 많고, 여차하면 람다식으로 빠르게 구현할때도 많습니다.
+      +  그래서 ItemProcessorAdapter, ValidatingItemProcessor는 거의 사용하지 않습니다. 이들의 역할은 커스텀하게 직접 구현해도 되기 때문입니다.
+      +  다만, CompositeItemProcessor는 간혹 필요할때가 있기 때문에 소개드립니다.
+      +  CompositeItemProcessor는 ItemProcessor간의 체이닝을 지원하는 Processor라고 보시면 됩니다.
+      +  필터가 2번 필요할 때 사용할 수 있다 (Processor의 역할을 줄이기 위해.)
+
 출처 : https://ahndy84.tistory.com/18
 
 참고 : https://jojoldu.tistory.com/325?category=902551
