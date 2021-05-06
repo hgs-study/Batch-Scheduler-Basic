@@ -144,6 +144,28 @@
       + 예제 코드 : https://stackoverflow.com/questions/43003266/spring-batch-with-spring-data/43986718#43986718
     + Hibernate, JPA 등 영속성 컨텍스트가 필요한 Reader 사용시 fetchSize와 ChunkSize는 같은 값을 유지해야 합니다.
 
+
+### Database ItemWriter
+-----
+  + Writer는 Chunk단위의 마지막 단계
+    +  그래서 Database의 영속성과 관련해서는 항상 마지막에 Flush를 해줘야만 합니다.
+    +  예를 들어 아래와 같이 영속성을 사용하는 JPA, Hibernate의 경우 ItemWriter 구현체에서는 flush()와 session.clear()가 따라옵니다.
+  + 3가지 존재
+    + JdbcBatchItemWriter
+    + HibernateItemWriter
+    + JpaItemWriter
+  + JdbcBatchItemWriter
+    + ChunkSize만큼 쿼리를 모아놨다가 ChunkSize만큼 쌓이면 모아놓은 쿼리 DB에 전송
+      + 이렇게 처리하는 이유는 어플리케이션과 데이터베이스 간에 데이터를 주고 받는 회수를 최소화 하여 성능 향상을 꾀하기 위함입니다. 
+  + JpaItemWriter
+    +  JpaItemWriter는 JPA를 사용하기 때문에 영속성 관리를 위해 EntityManager를 할당해줘야 합니다.
+    +  일반적으로 spring-boot-starter-data-jpa를 의존성에 등록하면 Entity Manager가 Bean으로 자동생성되어 DI 코드만 추가해주시면 됩니다.
+  + Custom ItemWriter
+    + Reader와 달리 Writer의 경우 Custom하게 구현해야할 일이 많습니다.
+      + Reader에서 읽어온 데이터를 RestTemplate으로 외부 API로 전달해야할때
+      + 임시저장을 하고 비교하기 위해 싱글톤 객체에 값을 넣어야할때
+      + 여러 Entity를 동시에 save 해야할때
+
 출처 : https://ahndy84.tistory.com/18
 
 참고 : https://jojoldu.tistory.com/325?category=902551
