@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 @Configuration
 public class ProcessorConvertJobConfiguration {
 
-    public static final String JOB_NAME = "ProcessorConvertBatch";
+    public static final String JOB_NAME = "processorEvenBatch";
     public static final String BEAN_PREFIX = JOB_NAME + "_";
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -45,7 +45,7 @@ public class ProcessorConvertJobConfiguration {
     @JobScope
     public Step step() {
         return stepBuilderFactory.get(BEAN_PREFIX + "step")
-                .<Pay, String>chunk(chunkSize)
+                .<Pay, Pay>chunk(chunkSize)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
@@ -63,16 +63,21 @@ public class ProcessorConvertJobConfiguration {
     }
 
     @Bean
-    public ItemProcessor<Pay, String> processor() {
+    public ItemProcessor<Pay, Pay> processor() {
         return pay -> {
-            return pay.getTxName();
+            boolean isIgnoreTarget = pay.getId() %2 == 0L;
+            if(isIgnoreTarget){
+                log.info(">>>>>> pay txName = {}, isIgnoreTarget = {}",pay.getId(),isIgnoreTarget);
+                return null;
+            }
+            return pay;
         };
     }
 
-    private ItemWriter<String> writer() {
+    private ItemWriter<Pay> writer() {
         return items -> {
-            for (String item : items) {
-                log.info("pay getTxName={}", item);
+            for (Pay pay : items) {
+                log.info("pay getTxName={}", pay.getTxName());
             }
         };
     }
