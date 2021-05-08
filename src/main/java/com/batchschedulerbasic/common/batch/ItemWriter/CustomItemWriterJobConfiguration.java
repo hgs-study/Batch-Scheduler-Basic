@@ -1,7 +1,7 @@
-package com.batchschedulerbasic.common.util.batch.ItemWriter;
+package com.batchschedulerbasic.common.batch.ItemWriter;
 
-import com.batchschedulerbasic.common.util.batch.Pay;
-import com.batchschedulerbasic.common.util.batch.Pay2;
+import com.batchschedulerbasic.entity.Pay;
+import com.batchschedulerbasic.entity.Pay2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor

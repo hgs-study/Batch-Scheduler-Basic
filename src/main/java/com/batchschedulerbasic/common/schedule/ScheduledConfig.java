@@ -1,4 +1,4 @@
-package com.batchschedulerbasic.common.util.schedule;
+package com.batchschedulerbasic.common.schedule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

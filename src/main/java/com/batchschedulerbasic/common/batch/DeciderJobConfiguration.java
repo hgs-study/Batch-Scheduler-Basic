@@ -1,4 +1,4 @@
-package com.batchschedulerbasic.common.util.batch;
+package com.batchschedulerbasic.common.batch;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

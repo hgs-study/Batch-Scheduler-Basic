@@ -1,6 +1,6 @@
-package com.batchschedulerbasic.common.util.batch.ItemReader;
+package com.batchschedulerbasic.common.batch.ItemReader;
 
-import com.batchschedulerbasic.common.util.batch.Pay;
+import com.batchschedulerbasic.entity.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

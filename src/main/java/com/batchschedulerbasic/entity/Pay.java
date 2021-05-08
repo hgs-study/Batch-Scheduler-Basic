@@ -1,4 +1,4 @@
-package com.batchschedulerbasic.common.util.batch;
+package com.batchschedulerbasic.entity;
 
 import lombok.*;
 

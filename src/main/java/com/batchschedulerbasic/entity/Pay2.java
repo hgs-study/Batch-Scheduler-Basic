@@ -1,4 +1,4 @@
-package com.batchschedulerbasic.common.util.batch;
+package com.batchschedulerbasic.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,18 +25,18 @@ public class Pay2 {
     private Long id;
     private Long amount;
     private String txName;
-    private String txDateTime;
+    private LocalDateTime txDateTime;
 
     public Pay2(Long amount, String txName, String txDateTime) {
         this.amount = amount;
         this.txName = txName;
-        this.txDateTime = txDateTime;
+        this.txDateTime = LocalDateTime.parse(txDateTime, FORMATTER);
     }
 
     public Pay2(Long id, Long amount, String txName, String txDateTime) {
         this.id = id;
         this.amount = amount;
         this.txName = txName;
-        this.txDateTime = txDateTime;
+        this.txDateTime = LocalDateTime.parse(txDateTime, FORMATTER);
     }
 }

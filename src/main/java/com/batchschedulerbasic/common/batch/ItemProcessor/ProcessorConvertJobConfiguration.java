@@ -1,6 +1,6 @@
-package com.batchschedulerbasic.common.util.batch.ItemProcessor;
+package com.batchschedulerbasic.common.batch.ItemProcessor;
 
-import com.batchschedulerbasic.common.util.batch.Pay;
+import com.batchschedulerbasic.entity.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -15,6 +15,7 @@ import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilde
 import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +25,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
+@ComponentScan(basePackages = "com.batchschedulerbasic")
 public class ProcessorConvertJobConfiguration {
 
     public static final String JOB_NAME = "compositeProcessorJob";
@@ -53,6 +55,7 @@ public class ProcessorConvertJobConfiguration {
                 .processor(compositeProcessor())
                 .writer(writer())
                 .build();
+
     }
 
     @Bean
