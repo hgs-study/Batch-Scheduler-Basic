@@ -18,11 +18,7 @@ import java.util.Date;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ScheduleTest {
-
-//    @Autowired
-//    @Qualifier
-//    private final Job job;
+public class Scheduler {
 
     private final AwsBatchConfiguration awsBatchConfiguration;
     private final JobLauncher jobLauncher;
@@ -45,10 +41,4 @@ public class ScheduleTest {
                 .toJobParameters()
         );
     }
-
-//    @Scheduled(fixedDelay = 1000)
-//    public void alert2(){
-//        log.info("==========현재시간 :=========== "+ new Date());
-//    }
-
 }
